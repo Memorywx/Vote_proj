@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>请投票</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f5f9; /* 浅蓝色背景 */
+            color: #333; /* 深灰色文本 */
+            margin: 0;
+            padding: 0;
+            /*display: flex;*/
+            /*justify-content: center;*/
+            /*align-items: center;*/
+            /*height: 100vh;*/
+        }
+        main {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff; /* 白色背景 */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+        }
+        h2 {
+            color: #0366d6; /* 蓝色标题 */
+        }
+        form {
+            margin-top: 20px;
+        }
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        button[type="submit"] {
+            background-color: #0366d6; /* 蓝色按钮 */
+            color: #fff; /* 白色文本 */
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3; /* 悬停时深蓝色 */
+        }
+    </style>
+</head>
+<body>
+<main>
+
+    <h2>title:{{.vote.Vote.Title}}</h2>
+    <h2>id:{{.vote.Vote.Id}}</h2>
+<!--    <h2>userid:{{.vote.Vote.UserId}}</h2>-->
+<!--    <h2>type:{{.vote.Vote.Type}}</h2>-->
+<!--    <h2>status:{{.vote.Vote.Status}}</h2>-->
+
+    <form method="post" action="/vote">
+        <input type="hidden" name="vote_id" value="{{.vote.Vote.Id}}">
+        {{range $key, $value := .vote.Opt}}
+            <input type="checkbox" name="opt[]" id="customCheck{{$key}}" value="{{$value.Id}}">
+            <label for="customCheck{{$key}}">{{$value.Name}}</label>
+        {{end}}
+        <button type="submit">Submit</button>
+    </form>
+
+</main>
+
+</body>
+</html>

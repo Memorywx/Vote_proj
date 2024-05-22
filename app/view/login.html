@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>投票</title>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+    <style>
+        body {
+            background-color: #f0f4f7; /* 设置页面背景色为浅蓝色 */
+            font-family: Arial, sans-serif; /* 设置全局字体 */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+
+        .main {
+            background-color: #ffffff; /* 设置主要区域背景色为白色 */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+            text-align: center;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff; /* 设置按钮背景色为蓝色 */
+            color: #ffffff; /* 设置按钮文字颜色为白色 */
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3; /* 鼠标悬停时按钮背景色变深蓝色 */
+        }
+    </style>
+
+</head>
+<body>
+<main class="main">
+        <input type="text" name="name" id="name" placeholder="Your name">
+        <input type="password" name="password" id="password" placeholder="Your password">
+        <button type="submit" id="login_sub">Sign in</button>
+</main>
+<script>
+    $(document).ready(function () {
+        $("#login_sub").on("click", function (){
+            $.ajax({
+                // 请求资源路径
+                url:"/login",
+                // 请求参数
+                data:{
+                    name:$("#name").val(),
+                    password:$("#password").val()
+                },
+                // 请求方式
+                type:"post",
+                // 数据形式
+                dataType:"json",
+                // 请求成功后调用的回调函数
+                success:function (data){
+                    console.log(data)
+
+                    if (data.code !== 0 ) {
+                        alert(data.message)
+                    }else {
+                        alert("已登录")
+                        setTimeout("pageRedirect()", 3000);
+                    }
+                },
+                // 请求失败后调用的回调函数
+                error:function () {
+                    alert("请求失败")
+                }
+            });
+        });
+    });
+    function pageRedirect() {
+        window.location.replace("/index");
+    }
+</script>
+
+</body>
+</html>
